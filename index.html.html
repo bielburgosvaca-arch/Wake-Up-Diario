@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wake Up - Diario Digital</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ffc107;
+            font-weight: 900;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffc107;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #ffc107;
+        }
+
+        .user-role {
+            background-color: #3949ab;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .user-role.admin {
+            background-color: #d32f2f;
+        }
+
+        .user-role.writer {
+            background-color: #388e3c;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            color: #1a237e;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: #3949ab;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #303f9f;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #388e3c;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #2e7d32;
+            transform: translateY(-2px);
+        }
+
+        /* Sección principal */
+        .hero {
+            background: linear-gradient(rgba(26, 35, 126, 0.9), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* Contenido principal */
+        main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Artículos */
+        .articles {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .articles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .articles-header h2 {
+            color: #1a237e;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .article {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            border-left: 5px solid #1a237e;
+        }
+
+        .article:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-category {
+            color: #1a237e;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .article-title {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            color: #1a237e;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar h3 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ffc107;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .writers-list, .categories-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .writers-list li, .categories-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-count {
+            background-color: #e8eaf6;
+            color: #1a237e;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Formularios */
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .form-container h2 {
+            color: #1a237e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ffc107;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #1a237e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        .textarea-control {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Panel de administración */
+        .admin-panel {
+            background-color: white;
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .admin-panel h2 {
+            color: #1a237e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d32f2f;
+            font-size: 1.8rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .admin-tab {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .admin-tab.active {
+            color: #1a237e;
+            border-bottom-color: #d32f2f;
+        }
+
+        .admin-tab:hover:not(.active) {
+            color: #1a237e;
+            background-color: #f5f5f5;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .admin-controls input {
+            flex-grow: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .admin-table th {
+            background-color: #1a237e;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .admin-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Mensajes */
+        .message {
+            padding: 18px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .message-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-left: 5px solid #4caf50;
+        }
+
+        .message-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 5px solid #f44336;
+        }
+
+        .message-info {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-left: 5px solid #2196f3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a237e;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-logo span {
+            color: #ffc107;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            nav ul li {
+                margin: 0;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .admin-controls {
+                flex-direction: column;
+            }
+            
+            .admin-controls input {
+                min-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Wake <span>Up</span></a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" id="nav-inicio"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#" id="nav-noticias"><i class="fas fa-newspaper"></i> Noticias</a></li>
+                    <li><a href="#" id="nav-escritores"><i class="fas fa-pen-nib"></i> Escritores</a></li>
+                    <li id="nav-admin-item" class="hidden"><a href="#" id="nav-admin"><i class="fas fa-cogs"></i> Administración</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-info">
+                <div id="user-details" class="hidden">
+                    <span class="user-name" id="current-user-name"></span>
+                    <span class="user-role" id="current-user-role"></span>
+                </div>
+                <div class="user-actions">
+                    <button id="btn-login" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
+                    <button id="btn-register" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Registrarse</button>
+                    <button id="btn-logout" class="btn btn-danger hidden"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Wake Up - Tu diario digital</h1>
+            <p>Información veraz, análisis profundo y las noticias más relevantes del día. Un espacio para escritores comprometidos y lectores exigentes.</p>
+            <button id="btn-create-article" class="btn btn-primary hidden"><i class="fas fa-plus-circle"></i> Crear nueva noticia</button>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <!-- Mensajes dinámicos -->
+        <div id="message-container"></div>
+        
+        <!-- Formulario de inicio de sesión -->
+        <div id="login-form" class="form-container hidden">
+            <h2><i class="fas fa-sign-in-alt"></i> Iniciar sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                </button>
+            </form>
+            <p style="margin-top: 15px; text-align: center;">¿No tienes cuenta? <a href="#" id="switch-to-register">Regístrate aquí</a></p>
+        </div>
+        
+        <!-- Formulario de registro -->
+        <div id="register-form" class="form-container hidden">
+            <h2><i class="fas fa-user-plus"></i> Registrarse</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="register-name"><i class="fas fa-user"></i> Nombre completo</label>
+                    <input type="text" id="register-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                    <input type="email" id="register-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="register-password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user-tag"></i> Tipo de cuenta</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="account-type" value="usuario" checked>
+                            <i class="fas fa-user"></i> Usuario normal (solo lectura)
+                        </label>
+                        <label>
+                            <input type="radio" name="account-type" value="escritor">
+                            <i class="fas fa-pen-nib"></i> Escritor (necesita aprobación)
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-user-plus"></i> Registrarse
+                </button>
+            </form>
+            <p style="margin-top: 15px; text-align: center;">¿Ya tienes cuenta? <a href="#" id="switch-to-login">Inicia sesión aquí</a></p>
+        </div>
+        
+        <!-- Formulario de creación de noticias -->
+        <div id="create-article-form" class="form-container hidden">
+            <h2><i class="fas fa-plus-circle"></i> Crear nueva noticia</h2>
+            <form id="articleForm">
+                <div class="form-group">
+                    <label for="article-title"><i class="fas fa-heading"></i> Título de la noticia</label>
+                    <input type="text" id="article-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="article-category"><i class="fas fa-tag"></i> Categoría</label>
+                    <select id="article-category" class="form-control" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="Política">Política</option>
+                        <option value="Economía">Economía</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Cultura">Cultura</option>
+                        <option value="Deportes">Deportes</option>
+                        <option value="Internacional">Internacional</option>
+                        <option value="Salud">Salud</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="article-image"><i class="fas fa-image"></i> URL de la imagen (opcional)</label>
+                    <input type="text" id="article-image" class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="article-content"><i class="fas fa-align-left"></i> Contenido de la noticia</label>
+                    <textarea id="article-content" class="form-control textarea-control" required placeholder="Escribe el contenido de tu noticia aquí..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="article-excerpt"><i class="fas fa-quote-left"></i> Resumen (opcional)</label>
+                    <textarea id="article-excerpt" class="form-control" placeholder="Breve resumen de la noticia..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Publicar noticia
+                </button>
+            </form>
+        </div>
+        
+        <!-- Panel de administración -->
+        <div id="admin-panel" class="admin-panel hidden">
+            <h2><i class="fas fa-cogs"></i> Panel de Administración</h2>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="writers">Gestión de Escritores</button>
+                <button class="admin-tab" data-tab="articles">Gestión de Noticias</button>
+                <button class="admin-tab" data-tab="admins">Administradores</button>
+                <button class="admin-tab" data-tab="add-writer">Añadir Escritor</button>
+            </div>
+            
+            <!-- Gestión de escritores -->
+            <div id="writers-section" class="admin-section active">
+                <h3>Escritores pendientes de aprobación</h3>
+                <div id="pending-writers-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                
+                <h3 style="margin-top: 30px;">Escritores aprobados</h3>
+                <div id="approved-writers-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- Gestión de noticias -->
+            <div id="articles-section" class="admin-section">
+                <h3>Gestión de noticias</h3>
+                <div class="admin-controls">
+                    <input type="text" id="search-articles" class="form-control" placeholder="Buscar noticias por título o autor...">
+                    <button id="btn-refresh-articles" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Actualizar</button>
+                </div>
+                <div id="articles-management-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- Gestión de administradores -->
+            <div id="admins-section" class="admin-section">
+                <h3>Administradores del sistema</h3>
+                <div class="admin-controls">
+                    <input type="text" id="new-admin-name" class="form-control" placeholder="Nombre del nuevo administrador">
+                    <input type="email" id="new-admin-email" class="form-control" placeholder="Correo electrónico">
+                    <button id="btn-add-admin" class="btn btn-success"><i class="fas fa-user-shield"></i> Añadir administrador</button>
+                </div>
+                <div id="admins-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- Añadir escritor -->
+            <div id="add-writer-section" class="admin-section">
+                <h3>Añadir nuevo escritor</h3>
+                <p>Puedes añadir escritores directamente usando el comando "Añade a [nombre]" o completando el formulario.</p>
+                
+                <div class="admin-controls" style="margin-top: 20px;">
+                    <input type="text" id="new-writer-input" class="form-control" placeholder="Ejemplo: Añade a Pepe">
+                    <button id="btn-add-writer" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Añadir escritor</button>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h4>O usa el formulario completo:</h4>
+                    <div class="form-group">
+                        <label for="writer-name">Nombre del escritor</label>
+                        <input type="text" id="writer-name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="writer-email">Correo electrónico</label>
+                        <input type="email" id="writer-email" class="form-control">
+                    </div>
+                    <button id="btn-add-writer-form" class="btn btn-primary"><i class="fas fa-user-plus"></i> Añadir escritor con formulario</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido principal (Inicio) -->
+        <div id="main-content">
+            <div class="articles-header">
+                <h2><i class="fas fa-newspaper"></i> Últimas noticias</h2>
+                <div id="filter-controls" class="hidden">
+                    <select id="category-filter" class="form-control" style="width: auto;">
+                        <option value="">Todas las categorías</option>
+                        <option value="Política">Política</option>
+                        <option value="Economía">Economía</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Cultura">Cultura</option>
+                        <option value="Deportes">Deportes</option>
+                        <option value="Internacional">Internacional</option>
+                        <option value="Salud">Salud</option>
+                    </select>
+                </div>
+            </div>
+            
+            <main>
+                <section class="articles" id="articles-container">
+                    <!-- Las noticias se cargarán dinámicamente aquí -->
+                </section>
+                
+                <aside class="sidebar">
+                    <h3><i class="fas fa-pen-nib"></i> Nuestros escritores</h3>
+                    <ul id="writers-list" class="writers-list">
+                        <!-- Se llenará dinámicamente -->
+                    </ul>
+                    
+                    <h3 style="margin-top: 30px;"><i class="fas fa-tags"></i> Categorías</h3>
+                    <ul id="categories-list" class="categories-list">
+                        <!-- Se llenará dinámicamente -->
+                    </ul>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background-color: #f5f5f5; border-radius: 8px;">
+                        <h4><i class="fas fa-info-circle"></i> Sobre Wake Up</h4>
+                        <p style="margin-top: 10px;">Wake Up es un diario digital independiente que busca ofrecer información veraz y análisis profundo de los acontecimientos más relevantes.</p>
+                    </div>
+                </aside>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#" class="footer-logo">Wake <span>Up</span></a>
+            <p>Diario Digital - Información que despierta conciencias</p>
+            <p>Todos los derechos reservados &copy; 2023</p>
+            <p id="storage-status">Estado del sistema: <span id="storage-count">0</span> usuarios, <span id="articles-count">0</span> noticias</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sistema de almacenamiento simulado (localStorage como "centro de datos")
+        class DataCenter {
+            constructor() {
+                this.initializeStorage();
+            }
+            
+            initializeStorage() {
+                // Inicializar datos si no existen
+                if (!localStorage.getItem('wakeup_users')) {
+                    const defaultUsers = [
+                        { id: 1, name: "Carlos Rodríguez", email: "carlos@ejemplo.com", password: "123456", role: "escritor", approved: true },
+                        { id: 2, name: "Ana García", email: "ana@ejemplo.com", password: "123456", role: "escritor", approved: true },
+                        { id: 3, name: "Marta López", email: "marta@ejemplo.com", password: "123456", role: "escritor", approved: true },
+                        { id: 4, name: "Usuario Demo", email: "usuario@ejemplo.com", password: "123456", role: "usuario", approved: true },
+                        { id: 5, name: "Administrador", email: "admin@wakeup.com", password: "admin123", role: "admin", approved: true }
+                    ];
+                    localStorage.setItem('wakeup_users', JSON.stringify(defaultUsers));
+                }
+                
+                if (!localStorage.getItem('wakeup_articles')) {
+                    const defaultArticles = [
+                        { 
+                            id: 1, 
+                            title: "Avances en inteligencia artificial para el periodismo digital", 
+                            category: "Tecnología", 
+                            content: "La IA está revolucionando la forma en que se crean y consumen las noticias. Descubre cómo los medios de comunicación están implementando estas tecnologías para mejorar la precisión y relevancia de sus contenidos. Las herramientas de IA permiten analizar grandes volúmenes de datos, detectar tendencias y hasta generar contenidos básicos, aunque los periodistas siguen siendo esenciales para el análisis profundo y la verificación de hechos.", 
+                            excerpt: "La IA está revolucionando la forma en que se crean y consumen las noticias. Descubre cómo los medios de comunicación están implementando estas tecnologías.",
+                            image: "https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                            authorId: 1, 
+                            authorName: "Carlos Rodríguez",
+                            date: "2023-03-15",
+                            published: true
+                        },
+                        { 
+                            id: 2, 
+                            title: "El futuro de los medios digitales en la era de las suscripciones", 
+                            category: "Economía", 
+                            content: "Cómo los periódicos digitales están adaptando sus modelos de negocio para sobrevivir en un mercado cada vez más competitivo. La publicidad tradicional ya no es suficiente, y muchas publicaciones están optando por modelos de suscripción que ofrecen contenido exclusivo a sus lectores más fieles. Este cambio representa tanto un desafío como una oportunidad para el periodismo de calidad.", 
+                            excerpt: "Cómo los periódicos digitales están adaptando sus modelos de negocio para sobrevivir en un mercado cada vez más competitivo.",
+                            image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                            authorId: 2, 
+                            authorName: "Ana García",
+                            date: "2023-03-12",
+                            published: true
+                        },
+                        { 
+                            id: 3, 
+                            title: "El resurgimiento del periodismo narrativo en formato digital", 
+                            category: "Cultura", 
+                            content: "Los lectores buscan historias profundas y bien contadas, incluso en el mundo digital. Conoce a los autores que están liderando este movimiento que combina la rigurosidad periodística con técnicas narrativas propias de la literatura. Este enfoque está atrayendo a nuevos lectores y revitalizando el interés por el periodismo de calidad.", 
+                            excerpt: "Los lectores buscan historias profundas y bien contadas, incluso en el mundo digital. Conoce a los autores que están liderando este movimiento.",
+                            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                            authorId: 3, 
+                            authorName: "Marta López",
+                            date: "2023-03-10",
+                            published: true
+                        }
+                    ];
+                    localStorage.setItem('wakeup_articles', JSON.stringify(defaultArticles));
+                }
+                
+                if (!localStorage.getItem('wakeup_nextUserId')) {
+                    localStorage.setItem('wakeup_nextUserId', '6');
+                }
+                
+                if (!localStorage.getItem('wakeup_nextArticleId')) {
+                    localStorage.setItem('wakeup_nextArticleId', '4');
+                }
+            }
+            
+            getUsers() {
+                return JSON.parse(localStorage.getItem('wakeup_users') || '[]');
+            }
+            
+            saveUsers(users) {
+                localStorage.setItem('wakeup_users', JSON.stringify(users));
+                this.updateStorageStatus();
+            }
+            
+            getArticles() {
+                return JSON.parse(localStorage.getItem('wakeup_articles') || '[]');
+            }
+            
+            saveArticles(articles) {
+                localStorage.setItem('wakeup_articles', JSON.stringify(articles));
+                this.updateStorageStatus();
+            }
+            
+            addUser(name, email, password, role) {
+                const users = this.getUsers();
+                const nextId = parseInt(localStorage.getItem('wakeup_nextUserId'));
+                
+                const newUser = {
+                    id: nextId,
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: role,
+                    approved: role === 'usuario' || role === 'admin' // Los usuarios normales y admins se aprueban automáticamente
+                };
+                
+                users.push(newUser);
+                this.saveUsers(users);
+                localStorage.setItem('wakeup_nextUserId', (nextId + 1).toString());
+                
+                return newUser;
+            }
+            
+            addArticle(title, category, content, excerpt, image, authorId, authorName) {
+                const articles = this.getArticles();
+                const nextId = parseInt(localStorage.getItem('wakeup_nextArticleId'));
+                
+                // Si no se proporciona un resumen, crear uno automáticamente
+                if (!excerpt && content.length > 150) {
+                    excerpt = content.substring(0, 150) + '...';
+                } else if (!excerpt) {
+                    excerpt = content;
+                }
+                
+                // Imagen por defecto si no se proporciona
+                if (!image) {
+                    const categoryImages = {
+                        'Política': 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Economía': 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Tecnología': 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Cultura': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Deportes': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Internacional': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                        'Salud': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'
+                    };
+                    image = categoryImages[category] || 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80';
+                }
+                
+                const newArticle = {
+                    id: nextId,
+                    title: title,
+                    category: category,
+                    content: content,
+                    excerpt: excerpt,
+                    image: image,
+                    authorId: authorId,
+                    authorName: authorName,
+                    date: new Date().toISOString().split('T')[0],
+                    published: true
+                };
+                
+                articles.push(newArticle);
+                this.saveArticles(articles);
+                localStorage.setItem('wakeup_nextArticleId', (nextId + 1).toString());
+                
+                return newArticle;
+            }
+            
+            updateArticle(articleId, updates) {
+                const articles = this.getArticles();
+                const articleIndex = articles.findIndex(article => article.id === articleId);
+                
+                if (articleIndex !== -1) {
+                    articles[articleIndex] = { ...articles[articleIndex], ...updates };
+                    this.saveArticles(articles);
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            deleteArticle(articleId) {
+                const articles = this.getArticles();
+                const filteredArticles = articles.filter(article => article.id !== articleId);
+                
+                if (filteredArticles.length !== articles.length) {
+                    this.saveArticles(filteredArticles);
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            findUserByEmail(email) {
+                const users = this.getUsers();
+                return users.find(user => user.email === email);
+            }
+            
+            findUserById(id) {
+                const users = this.getUsers();
+                return users.find(user => user.id === id);
+            }
+            
+            approveWriter(userId) {
+                const users = this.getUsers();
+                const userIndex = users.findIndex(user => user.id === userId);
+                
+                if (userIndex !== -1) {
+                    users[userIndex].approved = true;
+                    this.saveUsers(users);
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            rejectWriter(userId) {
+                const users = this.getUsers();
+                const userIndex = users.findIndex(user => user.id === userId);
+                
+                if (userIndex !== -1) {
+                    users.splice(userIndex, 1);
+                    this.saveUsers(users);
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            getWriters() {
+                const users = this.getUsers();
+                return users.filter(user => user.role === 'escritor');
+            }
+            
+            getAdmins() {
+                const users = this.getUsers();
+                return users.filter(user => user.role === 'admin');
+            }
+            
+            getPendingWriters() {
+                const users = this.getUsers();
+                return users.filter(user => user.role === 'escritor' && !user.approved);
+            }
+            
+            getApprovedWriters() {
+                const users = this.getUsers();
+                return users.filter(user => user.role === 'escritor' && user.approved);
+            }
+            
+            getPublishedArticles() {
+                const articles = this.getArticles();
+                return articles.filter(article => article.published);
+            }
+            
+            getArticlesByCategory(category) {
+                const articles = this.getPublishedArticles();
+                if (!category) return articles;
+                return articles.filter(article => article.category === category);
+            }
+            
+            getCategories() {
+                const articles = this.getPublishedArticles();
+                const categories = {};
+                
+                articles.forEach(article => {
+                    if (categories[article.category]) {
+                        categories[article.category]++;
+                    } else {
+                        categories[article.category] = 1;
+                    }
+                });
+                
+                return categories;
+            }
+            
+            updateStorageStatus() {
+                const users = this.getUsers();
+                const articles = this.getArticles();
+                const userCount = users.length;
+                const articleCount = articles.length;
+                
+                document.getElementById('storage-count').textContent = userCount;
+                document.getElementById('articles-count').textContent = articleCount;
+            }
+        }
+
+        // Inicializar el "centro de datos"
+        const dataCenter = new DataCenter();
+        
+        // Estado de la aplicación
+        const appState = {
+            currentUser: null,
+            currentView: 'main',
+            currentAdminTab: 'writers'
+        };
+
+        // Elementos DOM
+        const elements = {
+            // Contenedores principales
+            loginForm: document.getElementById('login-form'),
+            registerForm: document.getElementById('register-form'),
+            adminPanel: document.getElementById('admin-panel'),
+            mainContent: document.getElementById('main-content'),
+            createArticleForm: document.getElementById('create-article-form'),
+            
+            // Botones de navegación
+            btnLogin: document.getElementById('btn-login'),
+            btnRegister: document.getElementById('btn-register'),
+            btnLogout: document.getElementById('btn-logout'),
+            btnCreateArticle: document.getElementById('btn-create-article'),
+            navInicio: document.getElementById('nav-inicio'),
+            navNoticias: document.getElementById('nav-noticias'),
+            navEscritores: document.getElementById('nav-escritores'),
+            navAdmin: document.getElementById('nav-admin'),
+            navAdminItem: document.getElementById('nav-admin-item'),
+            
+            // Información de usuario
+            userDetails: document.getElementById('user-details'),
+            currentUserName: document.getElementById('current-user-name'),
+            currentUserRole: document.getElementById('current-user-role'),
+            
+            // Formularios
+            loginFormElement: document.getElementById('loginForm'),
+            registerFormElement: document.getElementById('registerForm'),
+            articleForm: document.getElementById('articleForm'),
+            
+            // Panel de administración
+            adminTabs: document.querySelectorAll('.admin-tab'),
+            adminSections: document.querySelectorAll('.admin-section'),
+            
+            // Elementos de administración
+            newWriterInput: document.getElementById('new-writer-input'),
+            btnAddWriter: document.getElementById('btn-add-writer'),
+            writerName: document.getElementById('writer-name'),
+            writerEmail: document.getElementById('writer-email'),
+            btnAddWriterForm: document.getElementById('btn-add-writer-form'),
+            pendingWritersList: document.getElementById('pending-writers-list'),
+            approvedWritersList: document.getElementById('approved-writers-list'),
+            articlesManagementList: document.getElementById('articles-management-list'),
+            searchArticles: document.getElementById('search-articles'),
+            btnRefreshArticles: document.getElementById('btn-refresh-articles'),
+            newAdminName: document.getElementById('new-admin-name'),
+            newAdminEmail: document.getElementById('new-admin-email'),
+            btnAddAdmin: document.getElementById('btn-add-admin'),
+            adminsList: document.getElementById('admins-list'),
+            
+            // Listas
+            writersList: document.getElementById('writers-list'),
+            categoriesList: document.getElementById('categories-list'),
+            articlesContainer: document.getElementById('articles-container'),
+            
+            // Filtros
+            filterControls: document.getElementById('filter-controls'),
+            categoryFilter: document.getElementById('category-filter'),
+            
+            // Enlaces de cambio entre formularios
+            switchToRegister: document.getElementById('switch-to-register'),
+            switchToLogin: document.getElementById('switch-to-login'),
+            
+            // Contenedor de mensajes
+            messageContainer: document.getElementById('message-container')
+        };
+
+        // Funciones de utilidad
+        function showMessage(message, type = 'success') {
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            elements.messageContainer.innerHTML = `
+                <div class="message message-${type}">
+                    <i class="fas ${icon}"></i>
+                    ${message}
+                </div>
+            `;
+            
+            // Auto-ocultar mensaje después de 5 segundos
+            setTimeout(() => {
+                elements.messageContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        function updateUIForUser() {
+            if (appState.currentUser) {
+                // Mostrar información del usuario
+                elements.userDetails.classList.remove('hidden');
+                elements.currentUserName.textContent = appState.currentUser.name;
+                elements.currentUserRole.textContent = appState.currentUser.role === 'admin' ? 'Administrador' : 
+                                                     appState.currentUser.role === 'escritor' ? 'Escritor' : 'Usuario';
+                elements.currentUserRole.className = 'user-role ' + appState.currentUser.role;
+                
+                // Cambiar botones
+                elements.btnLogin.classList.add('hidden');
+                elements.btnRegister.classList.add('hidden');
+                elements.btnLogout.classList.remove('hidden');
+                
+                // Mostrar botón de crear artículo si es escritor o admin
+                if (appState.currentUser.role === 'escritor' || appState.currentUser.role === 'admin') {
+                    elements.btnCreateArticle.classList.remove('hidden');
+                }
+                
+                // Mostrar enlace a administración si es admin
+                if (appState.currentUser.role === 'admin') {
+                    elements.navAdminItem.classList.remove('hidden');
+                } else {
+                    elements.navAdminItem.classList.add('hidden');
+                }
+                
+                // Mostrar filtros
+                elements.filterControls.classList.remove('hidden');
+            } else {
+                // Ocultar información del usuario
+                elements.userDetails.classList.add('hidden');
+                elements.btnCreateArticle.classList.add('hidden');
+                elements.navAdminItem.classList.add('hidden');
+                elements.filterControls.classList.add('hidden');
+                
+                // Restaurar botones
+                elements.btnLogin.classList.remove('hidden');
+                elements.btnRegister.classList.remove('hidden');
+                elements.btnLogout.classList.add('hidden');
+            }
+        }
+
+        function showView(viewName) {
+            // Ocultar todas las vistas
+            elements.loginForm.classList.add('hidden');
+            elements.registerForm.classList.add('hidden');
+            elements.adminPanel.classList.add('hidden');
+            elements.mainContent.classList.add('hidden');
+            elements.createArticleForm.classList.add('hidden');
+            
+            // Mostrar la vista solicitada
+            if (viewName === 'login') {
+                elements.loginForm.classList.remove('hidden');
+                appState.currentView = 'login';
+            } else if (viewName === 'register') {
+                elements.registerForm.classList.remove('hidden');
+                appState.currentView = 'register';
+            } else if (viewName === 'admin') {
+                // Verificar si el usuario actual es administrador
+                if (appState.currentUser && appState.currentUser.role === 'admin') {
+                    elements.adminPanel.classList.remove('hidden');
+                    appState.currentView = 'admin';
+                    loadAdminContent();
+                } else {
+                    showMessage('Acceso denegado. Solo los administradores pueden acceder al panel de administración.', 'error');
+                    showView('main');
+                }
+            } else if (viewName === 'create-article') {
+                // Verificar si el usuario actual puede crear artículos
+                if (appState.currentUser && (appState.currentUser.role === 'escritor' || appState.currentUser.role === 'admin')) {
+                    elements.createArticleForm.classList.remove('hidden');
+                    appState.currentView = 'create-article';
+                } else {
+                    showMessage('Debes ser un escritor o administrador para crear noticias.', 'error');
+                    showView('main');
+                }
+            } else {
+                elements.mainContent.classList.remove('hidden');
+                appState.currentView = 'main';
+                loadMainContent();
+            }
+        }
+
+        function loadMainContent() {
+            loadArticles();
+            loadWritersList();
+            loadCategoriesList();
+            dataCenter.updateStorageStatus();
+        }
+
+        function loadArticles(filterCategory = '') {
+            const articles = dataCenter.getArticlesByCategory(filterCategory);
+            const articlesContainer = elements.articlesContainer;
+            
+            articlesContainer.innerHTML = '';
+            
+            if (articles.length === 0) {
+                articlesContainer.innerHTML = `
+                    <div class="message message-info">
+                        <i class="fas fa-info-circle"></i>
+                        No hay noticias disponibles en esta categoría.
+                    </div>
+                `;
+                return;
+            }
+            
+            articles.forEach(article => {
+                const articleElement = document.createElement('article');
+                articleElement.className = 'article';
+                articleElement.innerHTML = `
+                    <img src="${article.image}" alt="${article.title}" class="article-img">
+                    <div class="article-content">
+                        <div class="article-category">${article.category}</div>
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <span class="article-author">Por: ${article.authorName}</span>
+                            <span class="article-date">${formatDate(article.date)}</span>
+                        </div>
+                        ${appState.currentUser && (appState.currentUser.role === 'admin' || appState.currentUser.id === article.authorId) ? `
+                        <div class="article-actions">
+                            <button class="btn btn-primary btn-edit-article" data-id="${article.id}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-delete-article" data-id="${article.id}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                articlesContainer.appendChild(articleElement);
+            });
+            
+            // Añadir event listeners a los botones de editar y eliminar
+            document.querySelectorAll('.btn-edit-article').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    editArticle(articleId);
+                });
+            });
+            
+            document.querySelectorAll('.btn-delete-article').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    deleteArticle(articleId);
+                });
+            });
+        }
+
+        function loadWritersList() {
+            const writers = dataCenter.getApprovedWriters();
+            const writersList = elements.writersList;
+            
+            writersList.innerHTML = '';
+            
+            writers.forEach(writer => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${writer.name}
+                    <span class="user-role writer">Escritor</span>
+                `;
+                writersList.appendChild(li);
+            });
+        }
+
+        function loadCategoriesList() {
+            const categories = dataCenter.getCategories();
+            const categoriesList = elements.categoriesList;
+            
+            categoriesList.innerHTML = '';
+            
+            for (const [category, count] of Object.entries(categories)) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${category}
+                    <span class="category-count">${count}</span>
+                `;
+                categoriesList.appendChild(li);
+            }
+        }
+
+        function loadAdminContent() {
+            // Activar la pestaña actual
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-tab') === appState.currentAdminTab) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Mostrar la sección actual
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+                if (section.id === `${appState.currentAdminTab}-section`) {
+                    section.classList.add('active');
+                }
+            });
+            
+            // Cargar contenido según la pestaña
+            if (appState.currentAdminTab === 'writers') {
+                loadPendingWriters();
+                loadApprovedWriters();
+            } else if (appState.currentAdminTab === 'articles') {
+                loadArticlesManagement();
+            } else if (appState.currentAdminTab === 'admins') {
+                loadAdminsList();
+            }
+        }
+
+        function loadPendingWriters() {
+            const pendingWriters = dataCenter.getPendingWriters();
+            const pendingList = elements.pendingWritersList;
+            
+            pendingList.innerHTML = '';
+            
+            if (pendingWriters.length === 0) {
+                pendingList.innerHTML = '<div class="message message-info">No hay escritores pendientes de aprobación</div>';
+                return;
+            }
+            
+            pendingWriters.forEach(writer => {
+                const writerElement = document.createElement('div');
+                writerElement.className = 'message message-info';
+                writerElement.style.textAlign = 'left';
+                writerElement.style.display = 'flex';
+                writerElement.style.justifyContent = 'space-between';
+                writerElement.style.alignItems = 'center';
+                writerElement.innerHTML = `
+                    <div>
+                        <strong>${writer.name}</strong><br>
+                        <small>${writer.email}</small>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn btn-success btn-approve-writer" data-id="${writer.id}">
+                            <i class="fas fa-check"></i> Aprobar
+                        </button>
+                        <button class="btn btn-danger btn-reject-writer" data-id="${writer.id}">
+                            <i class="fas fa-times"></i> Rechazar
+                        </button>
+                    </div>
+                `;
+                pendingList.appendChild(writerElement);
+            });
+            
+            // Añadir event listeners a los botones de aprobar y rechazar
+            document.querySelectorAll('.btn-approve-writer').forEach(button => {
+                button.addEventListener('click', function() {
+                    const writerId = parseInt(this.getAttribute('data-id'));
+                    approveWriter(writerId);
+                });
+            });
+            
+            document.querySelectorAll('.btn-reject-writer').forEach(button => {
+                button.addEventListener('click', function() {
+                    const writerId = parseInt(this.getAttribute('data-id'));
+                    rejectWriter(writerId);
+                });
+            });
+        }
+
+        function loadApprovedWriters() {
+            const approvedWriters = dataCenter.getApprovedWriters();
+            const approvedList = elements.approvedWritersList;
+            
+            approvedList.innerHTML = '';
+            
+            if (approvedWriters.length === 0) {
+                approvedList.innerHTML = '<div class="message message-info">No hay escritores aprobados</div>';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            table.className = 'admin-table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${approvedWriters.map(writer => `
+                        <tr>
+                            <td>${writer.name}</td>
+                            <td>${writer.email}</td>
+                            <td>
+                                <button class="btn btn-danger btn-remove-writer" data-id="${writer.id}">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            approvedList.appendChild(table);
+            
+            // Añadir event listeners a los botones de eliminar
+            document.querySelectorAll('.btn-remove-writer').forEach(button => {
+                button.addEventListener('click', function() {
+                    const writerId = parseInt(this.getAttribute('data-id'));
+                    removeWriter(writerId);
+                });
+            });
+        }
+
+        function loadArticlesManagement() {
+            const articles = dataCenter.getArticles();
+            const searchTerm = elements.searchArticles.value.toLowerCase();
+            
+            // Filtrar artículos si hay término de búsqueda
+            let filteredArticles = articles;
+            if (searchTerm) {
+                filteredArticles = articles.filter(article => 
+                    article.title.toLowerCase().includes(searchTerm) || 
+                    article.authorName.toLowerCase().includes(searchTerm) ||
+                    article.category.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            const managementList = elements.articlesManagementList;
+            
+            managementList.innerHTML = '';
+            
+            if (filteredArticles.length === 0) {
+                managementList.innerHTML = '<div class="message message-info">No hay noticias disponibles</div>';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            table.className = 'admin-table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Autor</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${filteredArticles.map(article => `
+                        <tr>
+                            <td>${article.title}</td>
+                            <td>${article.category}</td>
+                            <td>${article.authorName}</td>
+                            <td>${formatDate(article.date)}</td>
+                            <td>${article.published ? '<span style="color: green;">Publicado</span>' : '<span style="color: orange;">Borrador</span>'}</td>
+                            <td class="admin-actions">
+                                <button class="btn btn-primary btn-edit-article-admin" data-id="${article.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-delete-article-admin" data-id="${article.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                ${article.published ? 
+                                    `<button class="btn btn-secondary btn-unpublish-article" data-id="${article.id}">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>` : 
+                                    `<button class="btn btn-success btn-publish-article" data-id="${article.id}">
+                                        <i class="fas fa-eye"></i>
+                                    </button>`
+                                }
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            managementList.appendChild(table);
+            
+            // Añadir event listeners a los botones
+            document.querySelectorAll('.btn-edit-article-admin').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    editArticle(articleId);
+                });
+            });
+            
+            document.querySelectorAll('.btn-delete-article-admin').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    deleteArticle(articleId);
+                });
+            });
+            
+            document.querySelectorAll('.btn-publish-article').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    toggleArticlePublish(articleId, true);
+                });
+            });
+            
+            document.querySelectorAll('.btn-unpublish-article').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    toggleArticlePublish(articleId, false);
+                });
+            });
+        }
+
+        function loadAdminsList() {
+            const admins = dataCenter.getAdmins();
+            const adminsList = elements.adminsList;
+            
+            adminsList.innerHTML = '';
+            
+            if (admins.length === 0) {
+                adminsList.innerHTML = '<div class="message message-info">No hay administradores en el sistema</div>';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            table.className = 'admin-table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${admins.map(admin => `
+                        <tr>
+                            <td>${admin.name} ${admin.id === appState.currentUser.id ? '(Tú)' : ''}</td>
+                            <td>${admin.email}</td>
+                            <td>
+                                ${admin.id !== appState.currentUser.id ? `
+                                <button class="btn btn-danger btn-remove-admin" data-id="${admin.id}">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                                ` : '<small>No puedes eliminarte a ti mismo</small>'}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            adminsList.appendChild(table);
+            
+            // Añadir event listeners a los botones de eliminar
+            document.querySelectorAll('.btn-remove-admin').forEach(button => {
+                button.addEventListener('click', function() {
+                    const adminId = parseInt(this.getAttribute('data-id'));
+                    removeAdmin(adminId);
+                });
+            });
+        }
+
+        function approveWriter(writerId) {
+            if (dataCenter.approveWriter(writerId)) {
+                showMessage('Escritor aprobado correctamente', 'success');
+                loadPendingWriters();
+                loadApprovedWriters();
+                loadWritersList();
+            } else {
+                showMessage('Error al aprobar escritor', 'error');
+            }
+        }
+
+        function rejectWriter(writerId) {
+            if (dataCenter.rejectWriter(writerId)) {
+                showMessage('Escritor rechazado y eliminado del sistema', 'success');
+                loadPendingWriters();
+                loadApprovedWriters();
+                loadWritersList();
+            } else {
+                showMessage('Error al rechazar escritor', 'error');
+            }
+        }
+
+        function removeWriter(writerId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este escritor? Esta acción no se puede deshacer.')) {
+                if (dataCenter.rejectWriter(writerId)) {
+                    showMessage('Escritor eliminado correctamente', 'success');
+                    loadApprovedWriters();
+                    loadWritersList();
+                } else {
+                    showMessage('Error al eliminar escritor', 'error');
+                }
+            }
+        }
+
+        function removeAdmin(adminId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este administrador?')) {
+                const users = dataCenter.getUsers();
+                const userIndex = users.findIndex(user => user.id === adminId);
+                
+                if (userIndex !== -1) {
+                    users.splice(userIndex, 1);
+                    dataCenter.saveUsers(users);
+                    showMessage('Administrador eliminado correctamente', 'success');
+                    loadAdminsList();
+                } else {
+                    showMessage('Error al eliminar administrador', 'error');
+                }
+            }
+        }
+
+        function toggleArticlePublish(articleId, publish) {
+            if (dataCenter.updateArticle(articleId, { published: publish })) {
+                showMessage(`Artículo ${publish ? 'publicado' : 'ocultado'} correctamente`, 'success');
+                loadArticlesManagement();
+                if (appState.currentView === 'main') {
+                    loadArticles(elements.categoryFilter.value);
+                }
+            } else {
+                showMessage('Error al actualizar el artículo', 'error');
+            }
+        }
+
+        function editArticle(articleId) {
+            const article = dataCenter.getArticles().find(a => a.id === articleId);
+            if (!article) {
+                showMessage('Artículo no encontrado', 'error');
+                return;
+            }
+            
+            // Llenar el formulario con los datos del artículo
+            document.getElementById('article-title').value = article.title;
+            document.getElementById('article-category').value = article.category;
+            document.getElementById('article-image').value = article.image;
+            document.getElementById('article-content').value = article.content;
+            document.getElementById('article-excerpt').value = article.excerpt || '';
+            
+            // Cambiar el texto del botón del formulario
+            const submitButton = document.querySelector('#articleForm button[type="submit"]');
+            submitButton.innerHTML = '<i class="fas fa-save"></i> Actualizar noticia';
+            submitButton.setAttribute('data-article-id', articleId);
+            
+            // Mostrar el formulario de creación/edición
+            showView('create-article');
+        }
+
+        function deleteArticle(articleId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta noticia? Esta acción no se puede deshacer.')) {
+                if (dataCenter.deleteArticle(articleId)) {
+                    showMessage('Noticia eliminada correctamente', 'success');
+                    
+                    if (appState.currentView === 'admin' && appState.currentAdminTab === 'articles') {
+                        loadArticlesManagement();
+                    } else if (appState.currentView === 'main') {
+                        loadArticles(elements.categoryFilter.value);
+                    }
+                } else {
+                    showMessage('Error al eliminar la noticia', 'error');
+                }
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', options);
+        }
+
+        // Función para añadir escritor desde el panel de administración
+        function addWriterFromAdmin() {
+            const command = elements.newWriterInput.value.trim();
+            
+            if (!command) {
+                showMessage('Por favor, introduce el comando o nombre del escritor', 'error');
+                return;
+            }
+            
+            // Extraer el nombre del comando (ej: "añade a Pepe" -> "Pepe")
+            let writerName = '';
+            if (command.toLowerCase().includes('añade a ')) {
+                writerName = command.substring(command.toLowerCase().indexOf('añade a ') + 8);
+            } else if (command.toLowerCase().includes('agrega a ')) {
+                writerName = command.substring(command.toLowerCase().indexOf('agrega a ') + 9);
+            } else {
+                writerName = command;
+            }
+            
+            // Capitalizar nombre
+            writerName = writerName.charAt(0).toUpperCase() + writerName.slice(1);
+            
+            // Generar un email temporal
+            const email = writerName.toLowerCase().replace(/\s+/g, '') + '@wakeup.com';
+            
+            // Verificar si el email ya está registrado
+            const existingUser = dataCenter.findUserByEmail(email);
+            if (existingUser) {
+                showMessage(`El escritor "${writerName}" ya está registrado`, 'error');
+                return;
+            }
+            
+            // Añadir el nuevo escritor
+            const newWriter = dataCenter.addUser(writerName, email, 'temp123', 'escritor');
+            showMessage(`Escritor "${writerName}" añadido correctamente. Deberá ser aprobado para poder publicar.`, 'success');
+            
+            // Limpiar campo
+            elements.newWriterInput.value = '';
+            
+            // Recargar listas
+            loadPendingWriters();
+            loadApprovedWriters();
+            loadWritersList();
+        }
+
+        function addWriterFromForm() {
+            const name = elements.writerName.value.trim();
+            const email = elements.writerEmail.value.trim();
+            
+            if (!name || !email) {
+                showMessage('Por favor, completa todos los campos', 'error');
+                return;
+            }
+            
+            // Verificar si el email ya está registrado
+            const existingUser = dataCenter.findUserByEmail(email);
+            if (existingUser) {
+                showMessage(`El email ${email} ya está registrado`, 'error');
+                return;
+            }
+            
+            // Añadir el nuevo escritor
+            const newWriter = dataCenter.addUser(name, email, 'temp123', 'escritor');
+            showMessage(`Escritor "${name}" añadido correctamente. Deberá ser aprobado para poder publicar.`, 'success');
+            
+            // Limpiar campos
+            elements.writerName.value = '';
+            elements.writerEmail.value = '';
+            
+            // Recargar listas
+            loadPendingWriters();
+            loadApprovedWriters();
+            loadWritersList();
+        }
+
+        function addAdmin() {
+            const name = elements.newAdminName.value.trim();
+            const email = elements.newAdminEmail.value.trim();
+            
+            if (!name || !email) {
+                showMessage('Por favor, completa todos los campos', 'error');
+                return;
+            }
+            
+            // Verificar si el email ya está registrado
+            const existingUser = dataCenter.findUserByEmail(email);
+            if (existingUser) {
+                showMessage(`El email ${email} ya está registrado`, 'error');
+                return;
+            }
+            
+            // Añadir el nuevo administrador
+            const newAdmin = dataCenter.addUser(name, email, 'admin123', 'admin');
+            showMessage(`Administrador "${name}" añadido correctamente.`, 'success');
+            
+            // Limpiar campos
+            elements.newAdminName.value = '';
+            elements.newAdminEmail.value = '';
+            
+            // Recargar lista de administradores
+            loadAdminsList();
+        }
+
+        // Event Listeners
+        elements.btnLogin.addEventListener('click', () => showView('login'));
+        elements.btnRegister.addEventListener('click', () => showView('register'));
+        elements.btnLogout.addEventListener('click', () => {
+            appState.currentUser = null;
+            updateUIForUser();
+            showMessage('Sesión cerrada correctamente', 'success');
+            showView('main');
+        });
+        
+        elements.btnCreateArticle.addEventListener('click', () => showView('create-article'));
+        
+        elements.navInicio.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('main');
+        });
+        
+        elements.navNoticias.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('main');
+        });
+        
+        elements.navEscritores.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('main');
+        });
+        
+        elements.navAdmin.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('admin');
+        });
+        
+        elements.switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('register');
+        });
+        
+        elements.switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('login');
+        });
+        
+        // Pestañas del panel de administración
+        elements.adminTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                appState.currentAdminTab = this.getAttribute('data-tab');
+                loadAdminContent();
+            });
+        });
+        
+        // Añadir escritor
+        elements.btnAddWriter.addEventListener('click', addWriterFromAdmin);
+        elements.btnAddWriterForm.addEventListener('click', addWriterFromForm);
+        
+        // Añadir administrador
+        elements.btnAddAdmin.addEventListener('click', addAdmin);
+        
+        // Buscar artículos en el panel de administración
+        elements.searchArticles.addEventListener('keyup', () => {
+            if (appState.currentView === 'admin' && appState.currentAdminTab === 'articles') {
+                loadArticlesManagement();
+            }
+        });
+        
+        elements.btnRefreshArticles.addEventListener('click', () => {
+            if (appState.currentView === 'admin' && appState.currentAdminTab === 'articles') {
+                loadArticlesManagement();
+            }
+        });
+        
+        // También permitir añadir escritor con Enter
+        elements.newWriterInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addWriterFromAdmin();
+            }
+        });
+
+        // Manejo del formulario de inicio de sesión
+        elements.loginFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const user = dataCenter.findUserByEmail(email);
+            
+            if (user && user.password === password) {
+                if (!user.approved && user.role === 'escritor') {
+                    showMessage('Tu cuenta de escritor está pendiente de aprobación por un administrador.', 'info');
+                    return;
+                }
+                
+                appState.currentUser = user;
+                updateUIForUser();
+                showMessage(`Bienvenido, ${user.name}`, 'success');
+                
+                // Ocultar formulario y mostrar contenido principal
+                showView('main');
+            } else {
+                showMessage('Email o contraseña incorrectos', 'error');
+            }
+        });
+
+        // Manejo del formulario de registro
+        elements.registerFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const role = document.querySelector('input[name="account-type"]:checked').value;
+            
+            // Verificar si el email ya está registrado
+            const existingUser = dataCenter.findUserByEmail(email);
+            if (existingUser) {
+                showMessage('Este email ya está registrado', 'error');
+                return;
+            }
+            
+            // Añadir usuario
+            const newUser = dataCenter.addUser(name, email, password, role);
+            
+            // Mostrar mensaje según el tipo de cuenta
+            if (role === 'usuario') {
+                showMessage(`Usuario "${name}" registrado correctamente. Ya puedes iniciar sesión.`, 'success');
+                showView('login');
+            } else if (role === 'escritor') {
+                showMessage(`Solicitud de escritor enviada para "${name}". Un administrador deberá aprobar tu cuenta.`, 'success');
+                showView('main');
+            }
+            
+            // Limpiar formulario
+            elements.registerFormElement.reset();
+        });
+
+        // Manejo del formulario de creación/edición de artículos
+        elements.articleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('article-title').value;
+            const category = document.getElementById('article-category').value;
+            const image = document.getElementById('article-image').value;
+            const content = document.getElementById('article-content').value;
+            const excerpt = document.getElementById('article-excerpt').value;
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const articleId = submitButton.getAttribute('data-article-id');
+            
+            if (articleId) {
+                // Actualizar artículo existente
+                if (dataCenter.updateArticle(parseInt(articleId), {
+                    title, category, image, content, excerpt
+                })) {
+                    showMessage('Noticia actualizada correctamente', 'success');
+                    
+                    // Restaurar el botón a su estado original
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
+                    submitButton.removeAttribute('data-article-id');
+                    
+                    // Recargar contenido
+                    showView('main');
+                } else {
+                    showMessage('Error al actualizar la noticia', 'error');
+                }
+            } else {
+                // Crear nuevo artículo
+                const newArticle = dataCenter.addArticle(
+                    title, category, content, excerpt, image, 
+                    appState.currentUser.id, appState.currentUser.name
+                );
+                
+                showMessage('Noticia publicada correctamente', 'success');
+                showView('main');
+            }
+            
+            // Limpiar formulario
+            e.target.reset();
+        });
+
+        // Filtro de categorías
+        elements.categoryFilter.addEventListener('change', function() {
+            loadArticles(this.value);
+        });
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar contenido principal
+            loadMainContent();
+            
+            // Mostrar contenido principal por defecto
+            showView('main');
+            
+            // Mensaje de bienvenida
+            showMessage('Bienvenido a Wake Up - Tu diario digital. Regístrate para acceder a todas las funcionalidades.', 'info');
+        });
+    </script>
+</body>
+</html>
